@@ -1,0 +1,26 @@
+{
+  "name": "g3",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "time": {
+      "type": "date",
+      "required": true
+    },
+    "pm25": {
+      "type": "number",
+      "required": true
+    },
+    "pm10": {
+      "type": "number",
+      "required": true
+    }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": {}
+}
