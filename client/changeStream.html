@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title></title>
+</head>
+
+<body>
+  <script>
+  var urlToChangeStream = 'http://localhost:3000/api/g3s/change-stream';
+  var src = new EventSource(urlToChangeStream);
+  src.addEventListener('data', function(msg) {
+    var data = JSON.parse(msg.data);
+    console.log(data); // the change object
+  });
+  </script>
+</body>
+
+</html>
