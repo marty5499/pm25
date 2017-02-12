@@ -1,0 +1,47 @@
+<!doctype html>
+<html>
+
+<head>
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+  <title>Google Map demo</title>
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://marty5499.github.io/air-schools/bower_components/webcomponentsjs/webcomponents-lite.min.js"></script>
+  <script src="https://webduino.io/components/webduino-js/dist/webduino-all.min.js"></script>
+  <script src="https://blockly.webduino.io/webduino-blockly.js"></script>
+  <script src="https://blockly.webduino.io/lib/runtime.min.js"></script>
+  <link rel="import" href="https://marty5499.github.io/air-schools/bower_components/google-map/google-map.html">
+  <link rel="import" href="https://marty5499.github.io/air-schools/bower_components/google-map/google-map-marker.html">
+  <link rel="import" href="https://marty5499.github.io/air-schools/bower_components/google-map/google-map-poly.html">
+  <link rel="import" href="https://marty5499.github.io/air-schools/bower_components/google-map/google-map-directions.html">
+  <style>
+  body {
+    margin: 0;
+    height: 100vh;
+  }
+  </style>
+</head>
+
+<body class="fullbleed">
+  <google-map latitude="22.598154" longitude="120.306138" min-zoom="1" max-zoom="18" language="tw" zoom="16" api-key="AIzaSyAoONQ7RH1I9_UdxL0D0ZBLbnPUeB5vmx4">
+    <google-map-marker id='mk' latitude="22.598154" longitude="120.306138" title="Go Giants!">
+      <h2 id="q"></h2></google-map-marker>
+  </google-map>
+  <script>
+  var urlToChangeStream = 'http://localhost:3000/api/g3s/change-stream';
+  var src = new EventSource(urlToChangeStream);
+
+  var gmap = document.querySelector('google-map');
+  gmap.addEventListener('google-map-ready', function(e) {
+    mk.info.open(mk.map, mk.marker);
+    mk.info.setContent("Ready...");
+    setInterval(function() {
+      $.getJSON('http://localhost:3000/api/g3s?filter[order]=id%20DESC&filter[limit]=1', function(data) {
+        data = data[0];
+        mk.info.setContent("PM2.5:" + data.pm25 + "<br>PM10:" + data.pm10);
+      });
+    }, 3000);
+  });
+  </script>
+</body>
+
+</html>
